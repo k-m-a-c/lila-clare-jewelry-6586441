@@ -1,0 +1,17 @@
+{% assign tag = saw_product_display %}
+{% assign saw_product_display = "Show" %}
+
+{% if product.tags contains tag %}
+  {% if customer.tags contains tag %}
+  {% else %}
+    {% assign saw_product_display = "Hide" %}
+  {% endif %}
+{% endif %}
+
+{% assign tag_hide = tag | append: "-Hide" %}
+{% if product.tags contains tag_hide %}
+  {% if customer.tags contains tag %}
+	  {% assign saw_product_display = "Hide" %}
+  {% else %}
+  {% endif %}
+{% endif %}

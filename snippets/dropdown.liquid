@@ -1,0 +1,45 @@
+{% if settings.navigation_alignment == "right" %}
+<ul class="horizontal fr unstyled clearfix">
+{% endif %}
+{% if settings.navigation_alignment == "below" %}
+<ul class="horizontal unstyled clearfix">
+{% endif %}
+  {% for link in linklists.main-menu.links %}
+  {% if linklists[link.handle] == empty %}
+  <li{% if settings.display_collection_dropdown and link.type == 'collection_link' and link.object.tags.size > 0 %} class="dropdown"{% endif %}{% if settings.display_blog_dropdown and link.type == 'blog_link' and link.object.articles.size > 0 %} class="dropdown"{% endif %}>
+    <a href="{{ link.url }}" class="{% if link.active %} current{% endif %}{% if settings.use_cufon_on_navigation %} cufon{% endif %}"><span>{{ link.title }}</span></a>
+    {% if settings.display_collection_dropdown and link.type == 'collection_link' and link.object.tags.size > 0 %}
+    <ul class="dropdown">
+      {% for tag in link.object.tags %}
+      <li><a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if settings.display_blog_dropdown and link.type == 'blog_link' and link.object.articles.size > 0 %}
+    <ul class="dropdown">
+      {% for article in link.object.articles %}
+      <li><a href="{{ article.url }}">{{ article.title }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </li>
+  {% else %}
+  <li class="dropdown"><a href="{{ link.url }}" class="{% if link.active %} current{% endif %}{% if settings.use_cufon_on_navigation %} cufon{% endif %}"><span>{{ link.title }}</span></a>
+    <ul class="dropdown">
+      {% for l in linklists[link.handle].links %}
+      <li><a href="{{ l.url }}"{% if l.active %} class="current"{% endif %}>{{ l.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endif %}
+  {% endfor %}
+  <li class="fr">{% if settings.twitter_link != '' %}<a href="{{ settings.twitter_link }}" title="{{ shop.name }} on Twitter" class="icon-social twitter">Twitter</a>{% endif %}</li>
+  <li class="fr">{% if settings.facebook_link != '' %}<a href="{{ settings.facebook_link }}" title="{{ shop.name }} on Facebook" class="icon-social facebook">Facebook</a>{% endif %}</li>
+  <li class="fr">{% if settings.youtube_link != '' %}<a href="{{ settings.youtube_link }}" title="{{ shop.name }} on YouTube" class="icon-social youtube">YouTube</a>{% endif %}</li>
+  <li class="fr">{% if settings.atom_link != '' %}<a href="{{ settings.atom_link }}" title="{{ shop.name }} news" class="icon-social atom">Blog feed</a>{% endif %}</li>
+  <li class="fr">{% if settings.instagram_link != '' %}<a href="{{ settings.instagram_link }}" title="{{ shop.name }} on Instagram" class="icon-social instagram">Instagram</a>{% endif %}</li>
+  <li class="fr"><li class="fr">{% if settings.pinterest_link != '' %}<a href="{{ settings.pinterest_link }}" title="{{ shop.name }} on Pinterest" class="icon-social pinterest">Pinterest</a>{% endif %}</li>
+  <li class="fr">{% if settings.vimeo_link != '' %}<a href="{{ settings.vimeo_link }}" title="{{ shop.name }} on Vimeo" class="icon-social vimeo">Vimeo</a>{% endif %}</li>
+  <li class="fr">{% if settings.tumblr_link != '' %}<a href="{{ settings.tumblr_link }}" title="{{ shop.name }} on Tumblr" class="icon-social tumblr">Tumblr</a>{% endif %}</li>
+  <li class="fr">{% if settings.google_link != '' %}<a href="{{ settings.google_link }}" title="{{ shop.name }} on Google+" class="icon-social google">Google+</a>{% endif %}</li>
+</ul>
